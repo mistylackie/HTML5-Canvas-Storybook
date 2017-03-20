@@ -69,21 +69,12 @@
 				context.closePath();
 			}
 
-			function drawMouth(xCord, yCord, radius, sAngle, eAngle) {
+			function drawMouth(xCord, yCord, radius, sAngle, eAngle, mColor, counterClock) {
 				context.beginPath();
-				context.arc(xCord, yCord, radius, sAngle, eAngle, true);
+				context.arc(xCord, yCord, radius, sAngle, eAngle, counterClock);
 				context.closePath();
 
-				context.fillStyle = "#666666";
-				context.fill();
-			}
-
-			function drawSadMouth(xCord, yCord, radius, sAngle, eAngle) {
-				context.beginPath();
-				context.arc(xCord, yCord, radius, sAngle, eAngle, false);
-				context.closePath();
-
-				context.fillStyle = "#666666";
+				context.fillStyle = mColor;
 				context.fill();
 			}
 
@@ -120,7 +111,7 @@
 				drawFace(95, 145, 40, 0, 2*Math.PI);
 				drawEye(75, 135, 5, 0, 2*Math.PI, "blue");
 				drawEye(114, 135, 5, 0, 2*Math.PI, "blue");;
-				drawMouth(95, 150, 22, Math.PI, 2*Math.PI);
+				drawMouth(95, 150, 22, Math.PI, 2*Math.PI, "#666666", true);
 				drawTounge(96, 170, 8, 0.99*Math.PI, 2.0*Math.PI);
 
 				//Properties being passed (line width, stroke color, moveToX, moveToY, lineToX, lineToY
@@ -134,9 +125,9 @@
 				drawEye(525, 135, 5, 0, 2*Math.PI, "#20B2AA");
 
 				if(sad) {
-					drawSadMouth(508, 168, 10, Math.PI, 2*Math.PI, "#666666");
+					drawMouth(508, 168, 10, Math.PI, 2*Math.PI, "#666666", false);
 				} else {
-					drawMouth(510, 155, 18, Math.PI, 2*Math.PI);
+					drawMouth(510, 155, 18, Math.PI, 2*Math.PI, "#666666", true);
 					drawTounge(510, 172, 8, 0.99*Math.PI, 2.0*Math.PI);
 				}
 
