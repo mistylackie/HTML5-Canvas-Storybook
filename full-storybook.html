@@ -1,369 +1,373 @@
-<html>
-	<head>
-		<title>The Story Behind The Blue Door</title>
-		<style>
-			canvas {
-				background-color: #f8f8f8;
-			}
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>The Story Behind The Blue Door</title>
+        <style>
+            canvas {
+                background-color: #f8f8f8;
+            }
 
-			#mySound {
-				display:none;
-			}
-		</style>
+            #mySound {
+                display:none;
+            }
+        </style>
     </head>
     <body>
-		<canvas id="myCanvas" width="610" height="500"></canvas>
-		<audio controls id="mySound">
-			<source src="https://codedigs.com/students/images/book/page-flip.mp3" type="audio/mpeg">
-		</audio>
-		<script type='text/javascript'>
-			// set up initial canvas and context area
-			var canvas = document.getElementById("myCanvas");
-			var context = canvas.getContext("2d");
-			
-			// detects if canvas is clicked and calls the pageClick function if it is
-			canvas.addEventListener("click", pageClick, false);
-			
-			// default story page number
-			var pageNo = 0;
+        <canvas id="myCanvas" width="610" height="500"></canvas>
+        <audio controls id="mySound">
+            <source src="https://codedigs.com/students/images/book/page-flip.mp3" type="audio/mpeg">
+        </audio>
+        <script type='text/javascript'>
+            // set up initial canvas and context area
+            let canvas = document.getElementById("myCanvas");
+            let context = canvas.getContext("2d");
 
-			function drawBookCover() {
-				context.beginPath();
-				context.rect(0, 0, 610, 500); //(x coord, y coord, width, height)
-				context.closePath();
+            // detects if canvas is clicked and calls the pageClick function if it is
+            canvas.addEventListener("click", pageClick, false);
 
-				// color in the rectangle
-				context.fillStyle = "#0051d8";
-				context.fill();
-				
-				// create gradient settings 
-				var gradientColor = context.createLinearGradient(50,250,150,50);
-				gradientColor.addColorStop(0,"#2474f8");
-				gradientColor.addColorStop(1,"#053079");
-				
-				// fill the rectangle with the gradient color
-				context.fillStyle = gradientColor;
-				context.fillRect(0, 0, 610, 500);
+            // default story page number
+            let pageNo = 0;
 
-				// add some text to the main canvas
-				context.font = "28pt Garamond";
-				context.fillStyle = "#ffffff";
-				context.fillText("The Story Behind The Blue Door", 55, 100);
-				context.font = "18pt Garamond";
-				context.fillStyle = "#c0c0c0";
-				context.fillText("What is with that bright blue door?", 120, 200);
-				context.font = "16pt Garamond";
-				context.fillText("Turn the page at the bottom right to start", 110, 230);
-				context.font = "16pt Garamond";
-				context.fillStyle = "#c0c0c0";
-				context.fillText("written by: Misty Lackie", 270, 470);
-			}
+            function drawBookCover() {
+                context.beginPath();
+                context.rect(0, 0, 610, 500); //(x coord, y coord, width, height)
+                context.closePath();
 
-			function drawFace(xCord, yCord, radius, sAngle, eAngle) {
-				context.beginPath();
-				context.arc(xCord, yCord, radius, sAngle, eAngle);
-				context.closePath();
+                // color in the rectangle
+                context.fillStyle = "#0051d8";
+                context.fill();
 
-				context.fillStyle = "white";
-				context.fill();
-				context.lineWidth = 2;
-				context.strokeStyle = "#333333";
-				context.stroke();
-			}
+                // create gradient settings
+                let gradientColor = context.createLinearGradient(50,250,150,50);
+                gradientColor.addColorStop(0,"#2474f8");
+                gradientColor.addColorStop(1,"#053079");
 
-			function drawEye(xCord, yCord, radius, sAngle, eAngle, eyeColor) {
-				context.beginPath();
-				context.arc(xCord, yCord, radius, sAngle, eAngle);
-				context.closePath();
-				context.fillStyle = eyeColor;
-				context.fill();
-			}
+                // fill the rectangle with the gradient color
+                context.fillStyle = gradientColor;
+                context.fillRect(0, 0, 610, 500);
 
-			function drawMouth(xCord, yCord, radius, sAngle, eAngle, mColor, counterClock) {
-				context.beginPath();
-				context.arc(xCord, yCord, radius, sAngle, eAngle, counterClock);
-				context.closePath();
-				context.fillStyle = mColor;
-				context.fill();
-			}
+                // add some text to the main canvas
+                context.font = "28pt Garamond";
+                context.fillStyle = "#ffffff";
+                context.fillText("The Story Behind The Blue Door", 55, 100);
+                context.font = "18pt Garamond";
+                context.fillStyle = "#c0c0c0";
+                context.fillText("What is with that bright blue door?", 120, 200);
+                context.font = "16pt Garamond";
+                context.fillText("Turn the page at the bottom right to start", 110, 230);
+                context.font = "16pt Garamond";
+                context.fillStyle = "#c0c0c0";
+                context.fillText("written by: Misty Lackie", 270, 470);
+            }
 
-			function drawTongue(xCord, yCord, radius, sAngle, eAngle) {
-				context.beginPath();
-				context.arc(xCord, yCord, radius, sAngle, eAngle, false); //false is for counterClockwise
-				context.closePath();
-				context.fillStyle = "red";
-				context.fill();
-			}
+            function drawFace(xCord, yCord, radius, sAngle, eAngle) {
+                context.beginPath();
+                context.arc(xCord, yCord, radius, sAngle, eAngle);
+                context.closePath();
 
-			function drawHair(lWidth, sColor, movetoX, movetoY, linetoX, linetoY) {
-				context.beginPath();
-				context.moveTo(movetoX, movetoY);
-				context.lineTo(linetoX, linetoY);
-				context.closePath();
-				context.lineWidth = lWidth;
-				context.strokeStyle = sColor;
-				context.stroke();
-			}
+                context.fillStyle = "white";
+                context.fill();
+                context.lineWidth = 2;
+                context.strokeStyle = "#333333";
+                context.stroke();
+            }
 
-			function drawTopHair(xCord, yCord, radius, sAngle, eAngle) {
-				context.beginPath();
-				context.arc(xCord, yCord, radius, sAngle, eAngle, false); //false is for counterClockwise
-				context.closePath();
-				context.fillStyle = "yellow";
-				context.fill();
-			}
+            function drawEye(xCord, yCord, radius, sAngle, eAngle, eyeColor) {
+                context.beginPath();
+                context.arc(xCord, yCord, radius, sAngle, eAngle);
+                context.closePath();
+                context.fillStyle = eyeColor;
+                context.fill();
+            }
 
-			function drawNathan() {
-				drawFace(95, 145, 40, 0, 2*Math.PI);
-				drawEye(75, 135, 5, 0, 2*Math.PI, "blue");
-				drawEye(114, 135, 5, 0, 2*Math.PI, "blue");
-				drawMouth(95, 150, 22, Math.PI, 2*Math.PI, "#666666", true);
-				drawTongue(96, 170, 8, 0.99*Math.PI, 2.0*Math.PI);
+            function drawMouth(xCord, yCord, radius, sAngle, eAngle, mColor, counterClock) {
+                context.beginPath();
+                context.arc(xCord, yCord, radius, sAngle, eAngle, counterClock);
+                context.closePath();
+                context.fillStyle = mColor;
+                context.fill();
+            }
 
-				//Properties being passed (line width, stroke color, moveToX, moveToY, lineToX, lineToY
-				drawHair(50, "yellow", 106, 118, 100, 96);
-			}
+            function drawTongue(xCord, yCord, radius, sAngle, eAngle) {
+                context.beginPath();
+                context.arc(xCord, yCord, radius, sAngle, eAngle, false); //false is for counterClockwise
+                context.closePath();
+                context.fillStyle = "red";
+                context.fill();
+            }
 
-			function drawMom(sad) {
-				//Adjust last (230) & 3rd properties (113) below to move hair down
-				drawHair(26, "yellow", 490, 113, 450, 230); //left side of hair
-				
-				drawFace(518, 145, 43, 0, 2*Math.PI);
-				drawEye(495, 135, 5, 0, 2*Math.PI, "#20B2AA"); //left eye
-				drawEye(525, 135, 5, 0, 2*Math.PI, "#20B2AA"); //right eye
-				
-				// if sad property is passed to drawMom() function then draw sad mouth
-				// else draw happy mouth with tongue
-				if(sad) {
-					drawMouth(508, 168, 10, Math.PI, 2*Math.PI, "#666666", false);
-				} else {
-					drawMouth(510, 155, 18, Math.PI, 2*Math.PI, "#666666", true);
-					drawTongue(510, 172, 8, 0.99*Math.PI, 2.0*Math.PI);
-				}
+            function drawHair(lWidth, sColor, movetoX, movetoY, linetoX, linetoY) {
+                context.beginPath();
+                context.moveTo(movetoX, movetoY);
+                context.lineTo(linetoX, linetoY);
+                context.closePath();
+                context.lineWidth = lWidth;
+                context.strokeStyle = sColor;
+                context.stroke();
+            }
 
-				drawHair(26, "yellow", 580, 230, 545, 100); //right side of hair
+            function drawTopHair(xCord, yCord, radius, sAngle, eAngle) {
+                context.beginPath();
+                context.arc(xCord, yCord, radius, sAngle, eAngle, false); //false is for counterClockwise
+                context.closePath();
+                context.fillStyle = "yellow";
+                context.fill();
+            }
 
-				drawTopHair(506, 118, 30, Math.PI, 2*Math.PI);
-				drawTopHair(534, 118, 30, Math.PI, 2*Math.PI);
-			}
+            function drawNathan() {
+                drawFace(95, 145, 40, 0, 2*Math.PI);
+                drawEye(75, 135, 5, 0, 2*Math.PI, "blue");
+                drawEye(114, 135, 5, 0, 2*Math.PI, "blue");
+                drawMouth(95, 150, 22, Math.PI, 2*Math.PI, "#666666", true);
+                drawTongue(96, 170, 8, 0.99*Math.PI, 2.0*Math.PI);
 
-			function drawDoor() {
-				context.beginPath();
-				//Numbers represent (x coord, y coord, rectangle width, rectangle height)
-				context.rect(180, 150, 230, 350);
-				context.closePath();
+                //Properties being passed (line width, stroke color, moveToX, moveToY, lineToX, lineToY
+                drawHair(50, "yellow", 106, 118, 100, 96);
+            }
 
-				// color in the rectangle
-				context.fillStyle = "#0051d8";
-				context.fill();
-			}
+            function drawMom(sad) {
+                //Adjust last (230) & 3rd properties (113) below to move hair down
+                drawHair(26, "yellow", 490, 113, 450, 230); //left side of hair
 
-			function drawDoorKnob() {
-				context.beginPath();
-				//(x coord, y coord, circle radius, starting angle, ending angle, counter clockwise)
-				context.arc(370, 360, 15, 15, 2 * Math.PI, true);
-				context.closePath();
+                drawFace(518, 145, 43, 0, 2*Math.PI);
+                drawEye(495, 135, 5, 0, 2*Math.PI, "#20B2AA"); //left eye
+                drawEye(525, 135, 5, 0, 2*Math.PI, "#20B2AA"); //right eye
 
-				// color the circle
-				context.fillStyle = "#ffffff";
-				context.fill();
+                // if sad property is passed to drawMom() function then draw sad mouth
+                // else draw happy mouth with tongue
+                if(sad) {
+                    drawMouth(508, 168, 10, Math.PI, 2*Math.PI, "#666666", false);
+                } else {
+                    drawMouth(510, 155, 18, Math.PI, 2*Math.PI, "#666666", true);
+                    drawTongue(510, 172, 8, 0.99*Math.PI, 2.0*Math.PI);
+                }
 
-				// draw the stroke (border around the door knob)
-				context.lineWidth = 3;
-				context.strokeStyle = "#c0c0c0";
-				context.stroke();
-			}
+                drawHair(26, "yellow", 580, 230, 545, 100); //right side of hair
 
-			function drawPageTurn() {
-				var imagePageTurn = new Image();
+                drawTopHair(506, 118, 30, Math.PI, 2*Math.PI);
+                drawTopHair(534, 118, 30, Math.PI, 2*Math.PI);
+            }
 
-				imagePageTurn.onload = function() {
-					//(x, y, width, height)
-					context.drawImage(imagePageTurn, 510, 420, 100, 80);
-				};
+            function drawDoor() {
+                context.beginPath();
+                //Numbers represent (x coord, y coord, rectangle width, rectangle height)
+                context.rect(180, 150, 230, 350);
+                context.closePath();
 
-				imagePageTurn.src = "https://codedigs.com/students/images/book/page-turn.png";
-			}
+                // color in the rectangle
+                context.fillStyle = "#0051d8";
+                context.fill();
+            }
 
-			function pageClick() {
-				//clear canvas for redrawing new page
-				context.clearRect(0, 0, canvas.width, canvas.height);
-				pageNo++; //Get next page number
+            function drawDoorKnob() {
+                context.beginPath();
+                //(x coord, y coord, circle radius, starting angle, ending angle, counter clockwise)
+                context.arc(370, 360, 15, 15, 2 * Math.PI, true);
+                context.closePath();
 
-				//We have reached last page so set back to 0
-				if(pageNo > 12) {
-					pageNo = 0;
-				}
+                // color the circle
+                context.fillStyle = "#ffffff";
+                context.fill();
 
-				// get sound file in the HTML by the mySound id
-				var sound = document.getElementById("mySound");
-				
-				// play the sound
-				sound.play(); 
-				
-				//Turn to page number that is passed in the pageNo property
-				storyPages(pageNo);
-			}
+                // draw the stroke (border around the door knob)
+                context.lineWidth = 3;
+                context.strokeStyle = "#c0c0c0";
+                context.stroke();
+            }
 
-			function drawPaint() {
-				var imagePaint = new Image();
+            function drawPageTurn() {
+                let imagePageTurn = new Image();
 
-				imagePaint.onload = function() {
-					//(x, y, width, height)
-					context.drawImage(imagePaint, 250, 200, 200, 175);
-				};
-				imagePaint.src = "https://codedigs.com/students/images/book/blue-paint.png";
-			}
+                imagePageTurn.onload = function() {
+                    //(x, y, width, height)
+                    context.drawImage(imagePageTurn, 510, 420, 100, 80);
+                };
 
-			function drawRealDoor() {
-				var imageDoor = new Image();
+                imagePageTurn.src = "https://codedigs.com/students/images/book/page-turn.png";
+            }
 
-				imageDoor.onload = function() {
-					//(x, y, width, height)
-					context.drawImage(imageDoor, 165, 70, 250, 430);
-				};
-				imageDoor.src = "https://codedigs.com/students/images/book/real-door.jpg";
-			}
+            function pageClick() {
+                //clear canvas for redrawing new page
+                context.clearRect(0, 0, canvas.width, canvas.height);
+                pageNo++; //Get next page number
 
-			// this function builds out all pages and displays the proper page based on the pageNo property
-			function storyPages(pageNo) {
-				if(pageNo === 1) {
-					drawNathan();
-					drawMom();
-					drawPageTurn();
+                //We have reached last page so set back to 0
+                if(pageNo > 12) {
+                    pageNo = 0;
+                }
 
-					// Write Story Content
-					context.fillStyle = "#666666";
-					context.font = "30px Garamond";
-					context.fillText("Meet Nathan",15,220);
-					context.fillText("Meet Mom",450,220);
-					context.fillStyle = "#006699";
-					context.font = "38px Garamond";
-					context.fillText("Story Characters",180,50);
-				} else if (pageNo === 2) {
-					drawMom();
-					drawPageTurn();
+                // get sound file in the HTML by the mySound id
+                let sound = document.getElementById("mySound");
 
-					context.fillStyle = "#666666";
-					context.font = "28px Garamond";
-					context.fillText("One morning as I was walking past our ",20,120);
-					context.fillText("laundry room, I glanced at the door that ",20,150);
-					context.fillText("leads to the garage from the laundry ",20,180);
-					context.fillText("room and said: ",20,210);
-					context.fillText("\"Dang! Koby (our dog) has scratched up that ",20,270);
-					context.fillText("door. I really need to paint it.\"",20,300);
-				} else if (pageNo === 3) {
-					drawNathan();
-					drawPageTurn();
+                // play the sound
+                sound.play();
 
-					context.fillStyle = "#666666";
-					context.font = "32px Garamond";
-					context.fillText("\"Mom, you should paint it red!\"",160,150);
-				} else if (pageNo === 4) {
-					drawMom();
-					drawPageTurn();
+                //Turn to page number that is passed in the pageNo property
+                storyPages(pageNo);
+            }
 
-					context.fillStyle = "red";
-					context.font = "36px Garamond";
-					context.fillText('Red?',25,150);
-					context.fillStyle = "#666666";
-					context.font = "28px Garamond";
-					context.fillText("\"That is a little too bold for my taste. ",25,180);
-					context.fillText("I like things simple. How about we ",25,210);
-					context.fillText("choose a nice blue instead?\" ",25,240);
-				} else if (pageNo === 5) {
-					drawNathan();
-					drawPageTurn();
+            function drawPaint() {
+                let imagePaint = new Image();
 
-					context.fillStyle = "#666666";
-					context.font = "30px Garamond";
-					context.fillText("\"Can I pick out the color of blue?\"",160,150);
-				} else if(pageNo === 6) {
-					drawNathan();
-					drawMom();
-					drawPageTurn();
+                imagePaint.onload = function() {
+                    //(x, y, width, height)
+                    context.drawImage(imagePaint, 250, 200, 200, 175);
+                };
+                imagePaint.src = "https://codedigs.com/students/images/book/blue-paint.png";
+            }
 
-					context.fillStyle = "#666666";
-					context.font = "26px Garamond";
-					context.fillText("Mom reluctantly agreed not really knowing what she was ",15,250);
-					context.fillText("getting herself into. They headed to the hardware ",15,280);
-					context.fillText("store to pick out some paint.",15,310);
-				} else if (pageNo === 7) {
-					drawNathan();
-					drawPaint();
-					drawPageTurn();
+            function drawRealDoor() {
+                let imageDoor = new Image();
 
-					context.fillStyle = "#666666";
-					context.font = "30px Garamond";
-					context.fillText("Of course, Nate chose the brightest ",160,130);
-					context.fillText("blue he could find!",160,160);
-				} else if (pageNo === 8) {
-					drawNathan();
-					drawMom();
-					drawDoor();
-					drawDoorKnob();
-					drawPageTurn();
+                imageDoor.onload = function() {
+                    //(x, y, width, height)
+                    context.drawImage(imageDoor, 165, 70, 250, 430);
+                };
+                imageDoor.src = "https://codedigs.com/students/images/book/real-door.jpg";
+            }
 
-					context.fillStyle = "#666666";
-					context.font = "32px Garamond";
-					context.fillText("That same day we painted the ",150,60);
-					context.fillText("laundry room door that ",150,90);
-					context.fillStyle = "#0051d8";
-					context.fillText("very bright blue.",150,120);
-				} else if (pageNo === 9) {
-					drawNathan();
-					drawDoor();
-					drawDoorKnob();
-					drawPageTurn();
+            // this function builds out all pages and displays the proper page based on the pageNo property
+            function storyPages(pageNo) {
+                if(pageNo === 1) {
+                    drawNathan();
+                    drawMom();
+                    drawPageTurn();
 
-					context.fillStyle = "#666666";
-					context.font = "38px Garamond";
-					context.fillText("Nate loved it!",180,130);
-				} else if (pageNo === 10) {
-					drawMom('sad');
-					drawDoor();
-					drawDoorKnob();
-					drawPageTurn();
+                    // Write Story Content
+                    context.fillStyle = "#666666";
+                    context.font = "30px Garamond";
+                    context.fillText("Meet Nathan",15,220);
+                    context.fillText("Meet Mom",450,220);
+                    context.fillStyle = "#006699";
+                    context.font = "38px Garamond";
+                    context.fillText("Story Characters",180,50);
+                } else if (pageNo === 2) {
+                    drawMom();
+                    drawPageTurn();
 
-					context.fillStyle = "#666666";
-					context.font = "38px Garamond";
-					context.fillText("Mom, not so much!",170,130);
-				} else if (pageNo === 11) {
-					drawMom();
-					drawPageTurn();
+                    context.fillStyle = "#666666";
+                    context.font = "28px Garamond";
+                    context.fillText("One morning as I was walking past our ",20,120);
+                    context.fillText("laundry room, I glanced at the door that ",20,150);
+                    context.fillText("leads to the garage from the laundry ",20,180);
+                    context.fillText("room and said: ",20,210);
+                    context.fillText("\"Dang! Koby (our dog) has scratched up that ",20,270);
+                    context.fillText("door. I really need to paint it.\"",20,300);
+                } else if (pageNo === 3) {
+                    drawNathan();
+                    drawPageTurn();
 
-					context.fillStyle = "#666666";
-					context.font = "24px Garamond";
-					context.fillText("Overtime I did warm up to the color and now everytime I ",15,60);
-					context.fillText("pass by the laundry room, I can't help but glance at ",15,90);
-					context.fillText("that bright door and smile. It doesn't matter what ",15,120);
-					context.fillText("kind of mood I am in, that blue door always puts ",15,150);
-					context.fillText("a smile on my face because it makes me think ",15,180);
-					context.fillText("of Nate and how fun he is.",15,210);
-					context.fillText("You see, Nate has this huge imagination that never slows ",15,270);
-					context.fillText("down. He has a silly, funny personality and he likes to do ",15,300);
-					context.fillText("things a little out of the norm. I hope he never loses that! ",15,330);
-					context.fillText("I love him for all of his crazy ideas and his huge imagination!",15,360);
-					context.fillText("He makes me, his mom, not take myself so ",15,420);
-					context.fillText("serious and I am a better person because of him.",15,450);
-				} else if (pageNo === 12) {
-					drawRealDoor();
-					drawNathan();
-					drawMom();
+                    context.fillStyle = "#666666";
+                    context.font = "32px Garamond";
+                    context.fillText("\"Mom, you should paint it red!\"",160,150);
+                } else if (pageNo === 4) {
+                    drawMom();
+                    drawPageTurn();
 
-					context.fillStyle = "#666666";
-					context.font = "42px Garamond";
-					context.fillText("The End!",210,50);
-				} else {
-					// if no pageNo is matched or if it is 0, load drawBookCover by default.
-					drawBookCover();
-					drawPageTurn();
-				}
-			}
-			
-			// loads the storyPages function passing the pageNo property for displaying the proper page
-			storyPages(pageNo);
-			
-		</script>
-	</body>
+                    context.fillStyle = "red";
+                    context.font = "36px Garamond";
+                    context.fillText('Red?',25,150);
+                    context.fillStyle = "#666666";
+                    context.font = "28px Garamond";
+                    context.fillText("\"That is a little too bold for my taste. ",25,180);
+                    context.fillText("I like things simple. How about we ",25,210);
+                    context.fillText("choose a nice blue instead?\" ",25,240);
+                } else if (pageNo === 5) {
+                    drawNathan();
+                    drawPageTurn();
+
+                    context.fillStyle = "#666666";
+                    context.font = "30px Garamond";
+                    context.fillText("\"Can I pick out the color of blue?\"",160,150);
+                } else if (pageNo === 6) {
+                    drawNathan();
+                    drawMom();
+                    drawPageTurn();
+
+                    context.fillStyle = "#666666";
+                    context.font = "26px Garamond";
+                    context.fillText("Mom reluctantly agreed not really knowing what she was ",15,250);
+                    context.fillText("getting herself into. They headed to the hardware ",15,280);
+                    context.fillText("store to pick out some paint.",15,310);
+                } else if (pageNo === 7) {
+                    drawNathan();
+                    drawPaint();
+                    drawPageTurn();
+
+                    context.fillStyle = "#666666";
+                    context.font = "30px Garamond";
+                    context.fillText("Of course, Nate chose the brightest ",160,130);
+                    context.fillText("blue he could find!",160,160);
+                } else if (pageNo === 8) {
+                    drawNathan();
+                    drawMom();
+                    drawDoor();
+                    drawDoorKnob();
+                    drawPageTurn();
+
+                    context.fillStyle = "#666666";
+                    context.font = "32px Garamond";
+                    context.fillText("That same day we painted the ",150,60);
+                    context.fillText("laundry room door that ",150,90);
+                    context.fillStyle = "#0051d8";
+                    context.fillText("very bright blue.",150,120);
+                } else if (pageNo === 9) {
+                    drawNathan();
+                    drawDoor();
+                    drawDoorKnob();
+                    drawPageTurn();
+
+                    context.fillStyle = "#666666";
+                    context.font = "38px Garamond";
+                    context.fillText("Nate loved it!",180,130);
+                } else if (pageNo === 10) {
+                    drawMom('sad');
+                    drawDoor();
+                    drawDoorKnob();
+                    drawPageTurn();
+
+                    context.fillStyle = "#666666";
+                    context.font = "38px Garamond";
+                    context.fillText("Mom, not so much!",170,130);
+                } else if (pageNo === 11) {
+                    drawMom();
+                    drawPageTurn();
+
+                    context.fillStyle = "#666666";
+                    context.font = "24px Garamond";
+                    context.fillText("Overtime I did warm up to the color and now everytime I ",15,60);
+                    context.fillText("pass by the laundry room, I can't help but glance at ",15,90);
+                    context.fillText("that bright door and smile. It doesn't matter what ",15,120);
+                    context.fillText("kind of mood I am in, that blue door always puts ",15,150);
+                    context.fillText("a smile on my face because it makes me think ",15,180);
+                    context.fillText("of Nate and how fun he is.",15,210);
+                    context.fillText("You see, Nate has this huge imagination that never slows ",15,270);
+                    context.fillText("down. He has a silly, funny personality and he likes to do ",15,300);
+                    context.fillText("things a little out of the norm. I hope he never loses that! ",15,330);
+                    context.fillText("I love him for all of his crazy ideas and his huge imagination!",15,360);
+                    context.fillText("He makes me, his mom, not take myself so ",15,420);
+                    context.fillText("serious and I am a better person because of him.",15,450);
+                } else if (pageNo === 12) {
+                    drawRealDoor();
+                    drawNathan();
+                    drawMom();
+
+                    context.fillStyle = "#666666";
+                    context.font = "42px Garamond";
+                    context.fillText("The End!",210,50);
+                } else {
+                    // if no pageNo is matched or if it is 0, load drawBookCover by default.
+                    drawBookCover();
+                    drawPageTurn();
+                }
+            }
+
+            // loads the storyPages function passing the pageNo property for displaying the proper page
+            storyPages(pageNo);
+
+        </script>
+    </body>
 </html>
