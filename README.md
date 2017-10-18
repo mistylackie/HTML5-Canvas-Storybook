@@ -6,7 +6,7 @@ HTML5 storybook app that utilized canvas. This was created for a CodeDigs.com tu
 
 ## Step-By-Step tutorial
 
-If you would like a step-by-step tutorial on how to create this HTML5 canvas storybook app, sign-up on [https://codedigs.com/](CodeDigs "CodeDigs - Kids Learn To Code")
+If you would like a step-by-step tutorial on how to create this HTML5 canvas storybook app, sign-up on [https://codedigs.com/](https://codedigs.com/)
 
 
 
